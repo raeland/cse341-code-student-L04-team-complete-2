@@ -1,16 +1,18 @@
 const express = require('express')
 const cors = require('cors');
 const app = express()
-
+const MongoClient = require('mongodb').MongoClient
+const mongodb = require('./db/connect')
 //const swaggerUi = require('swagger-ui-express');
 //const swaggerDocument = require('./swagger.json');
 
-// app
+const PORT = process.env.PORT || 8080
+app
 //   .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 //   .use(cors())
 //   .use(express.json())
 //   .use(express.urlencoded({ extended: true }))
-//   .use('/', require('./routes'));
+  .use('/', require('./routes'));
 
 app
   .get('/', (req, res) => {
@@ -18,8 +20,10 @@ app
 
 //const db = require('./models');
                                                                                                                                                                                                                                                                                                                                                   
-
-const PORT = process.env.PORT || 8080
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`)
-})
+mongodb.initDb((err, mongodb) => {
+  if (err) {
+    console.log(err)
+  } else {
+    app.listen(PORT)
+    console.log(`Server is running on port ${PORT}.`)
+}})
