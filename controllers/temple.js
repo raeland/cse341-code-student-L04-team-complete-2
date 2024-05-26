@@ -1,3 +1,4 @@
+//const mongodb = require('../db/connect')
 const db = require('../models');
 const Temple = db.temples;
 
